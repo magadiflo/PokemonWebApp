@@ -29,6 +29,8 @@ public class PokemonDetallesController extends HttpServlet {
         //Compartimos variables a la vista
         request.setAttribute("nombre", pokemonDetalles.getName());
         request.setAttribute("id", id);
+        System.out.println("id: " + id);
+        System.out.println("id del detalle: " + pokemonDetalles.getId());
 
         request.getRequestDispatcher("/WEB-INF/pages/detallePokemon.jsp").forward(request, response);
     }

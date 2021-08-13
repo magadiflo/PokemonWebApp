@@ -6,6 +6,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PokemonDetalles {
 
+    private int id;
     private String name;
     private int height;
     private int weight;
@@ -15,6 +16,14 @@ public class PokemonDetalles {
 
     public PokemonDetalles() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -68,11 +77,12 @@ public class PokemonDetalles {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("PokemonDetalles{name=").append(name);
+        sb.append("PokemonDetalles{id=").append(id);
+        sb.append(", name=").append(name);
         sb.append(", height=").append(height);
         sb.append(", weight=").append(weight);
         sb.append('}');
         return sb.toString();
-    }
+    }    
 
 }

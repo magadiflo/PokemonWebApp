@@ -1,14 +1,10 @@
 package pe.com.magadiflo.pokemon.service;
 
 import java.util.List;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import pe.com.magadiflo.pokemon.domain.Pokemon;
-import pe.com.magadiflo.pokemon.domain.PokemonDetalles;
-import pe.com.magadiflo.pokemon.domain.PokemonPaginacion;
+import pe.com.magadiflo.pokemon.domain.*;
 
 public class PokemonServiceImpl implements PokemonService {
 
@@ -37,6 +33,31 @@ public class PokemonServiceImpl implements PokemonService {
                 .path("/pokemon").path("/" + id)
                 .request(MediaType.APPLICATION_JSON)
                 .get(PokemonDetalles.class);
+    }
+    
+    @Override
+    public PokemonDetalles obtenerDetallesPokemon(String nombre) {
+        return PokemonServiceImpl.cliente.target(PokemonServiceImpl.URL_BASE)
+                .path("/pokemon").path("/" + nombre)
+                .request(MediaType.APPLICATION_JSON)
+                .get(PokemonDetalles.class);
+    }
+
+    @Override
+    public String obtenerUrlCadenaEvolucion(int id) {
+        PokemonEspecies pokemonEspecies = PokemonServiceImpl.cliente.target(URL_BASE)
+                .path("/pokemon-species").path("/" + id)
+                .request(MediaType.APPLICATION_JSON)
+                .get(PokemonEspecies.class);
+        return pokemonEspecies.getEvolution_chain().getUrl();
+    }
+
+    @Override
+    public Evolucion obtenerEvolucion(String url) {
+        Cadena cadena = PokemonServiceImpl.cliente.target(url)
+                .request(MediaType.APPLICATION_JSON)
+                .get(Cadena.class);
+        return cadena.getChain();
     }
 
     @Override

@@ -35,7 +35,7 @@ public class PokemonTest {
 //        }
         
         
-//Ambos funcionan para lo mismo
+//Con el id del pokemón obtenemos la url del la cadena de evolución
         Client client = ClientBuilder.newClient().register(new JacksonFeature());
         PokemonEspecies pokemonEspecies = client.target("https://pokeapi.co/api/v2/pokemon-species/1")
                 .request(MediaType.APPLICATION_JSON)
