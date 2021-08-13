@@ -7,6 +7,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import pe.com.magadiflo.pokemon.domain.Pokemon;
+import pe.com.magadiflo.pokemon.domain.PokemonDetalles;
 import pe.com.magadiflo.pokemon.domain.PokemonPaginacion;
 
 public class PokemonServiceImpl implements PokemonService {
@@ -28,6 +29,14 @@ public class PokemonServiceImpl implements PokemonService {
                 .queryParam("offset", offset)
                 .queryParam("limit", limit);
         PokemonServiceImpl.pokemonPaginacion = PokemonServiceImpl.webTarget.request(MediaType.APPLICATION_JSON).get(PokemonPaginacion.class);
+    }
+
+    @Override
+    public PokemonDetalles obtenerDetallesPokemon(int id) {
+        return PokemonServiceImpl.cliente.target(PokemonServiceImpl.URL_BASE)
+                .path("/pokemon").path("/" + id)
+                .request(MediaType.APPLICATION_JSON)
+                .get(PokemonDetalles.class);
     }
 
     @Override

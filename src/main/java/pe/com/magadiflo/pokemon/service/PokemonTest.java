@@ -1,31 +1,41 @@
 package pe.com.magadiflo.pokemon.service;
 
+import java.util.List;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import pe.com.magadiflo.pokemon.domain.Estadisticas;
+import pe.com.magadiflo.pokemon.domain.Habilidades;
+import pe.com.magadiflo.pokemon.domain.PokemonDetalles;
+import pe.com.magadiflo.pokemon.domain.Tipos;
+
 public class PokemonTest {
 
     public static void main(String[] args) {
+        
+        
+        Client client = ClientBuilder.newClient().register(new JacksonFeature());
+        PokemonDetalles pokemonDetalles = client
+                                                .target("https://pokeapi.co/api/v2/pokemon/1")
+                                                .request(MediaType.APPLICATION_JSON)
+                                                .get(PokemonDetalles.class);
+                                               
+        
+        System.out.println("Name: " + pokemonDetalles.getName());
+        System.out.println("Weight: " + pokemonDetalles.getWeight());
+        System.out.println("Height: " + pokemonDetalles.getHeight());
+        
+        List<Tipos> listaTipos = pokemonDetalles.getTypes();
+        listaTipos.forEach(tipos -> System.out.println(tipos.getType().getName()));
+        
+        List<Estadisticas> listaEstadisticas = pokemonDetalles.getStats();
+        listaEstadisticas.forEach(estadistica -> System.out.println(estadistica.getStat().getName()));
+        
+        List<Habilidades> listarHabilidades = pokemonDetalles.getAbilities();
+        listarHabilidades.forEach(habilidad -> System.out.println(habilidad.getAbility().getName()));
+                
 
-//        PokemonService pokemonService = new PokemonServiceImpl();
-//        pokemonService.obtenerDatosPokemones(880, 20);
-//        pokemonService.getListarPokemones().forEach(System.out::println);
-//        System.out.println("next: " + pokemonService.getUrlSiguiente());
-        String cad = "https://pokeapi.co/api/v2/pokemon-species?offset=0&limit=20";
-        
-        if(cad.contains("offset")){
-            System.out.println("Sí contiene el offset");
-        }
-        
-        if(cad.contains("&limit")){
-            System.out.println("Sí contiene el &limit");
-        }
-//        int i = cad.indexOf("&limit");
-        int iOffset = cad.indexOf("offset") + 7;
-        int iiLimit = cad.indexOf("&limit");
-        int res = iiLimit - iOffset;
-        String n = cad.substring(iOffset, iiLimit);
-        
-        System.out.println("iOffset: " + iOffset);
-        System.out.println("iiLimit: " + iiLimit);
-        System.out.println("Número: " + n);
 
     }
 
