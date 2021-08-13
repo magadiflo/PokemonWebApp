@@ -2,14 +2,12 @@ package pe.com.magadiflo.pokemon.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//Esta anotación permite que se ignore las otras propiedades del objeto que 
-//no se están comando en cuenta en esta clase
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Estadistica {
+public class Especie {
 
     private String name;
 
-    public Estadistica() {
+    public Especie() {
 
     }
 
@@ -24,8 +22,9 @@ public class Estadistica {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Estadistica{name=").append(name);
+        sb.append("Especie{name=").append(name);
         sb.append('}');
         return sb.toString();
     }
+
 }

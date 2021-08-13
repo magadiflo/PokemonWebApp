@@ -5,37 +5,43 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import pe.com.magadiflo.pokemon.domain.Estadisticas;
-import pe.com.magadiflo.pokemon.domain.Habilidades;
-import pe.com.magadiflo.pokemon.domain.PokemonDetalles;
-import pe.com.magadiflo.pokemon.domain.Tipos;
+import pe.com.magadiflo.pokemon.domain.Cadena;
+import pe.com.magadiflo.pokemon.domain.Especie;
+import pe.com.magadiflo.pokemon.domain.Evolucion;
+import pe.com.magadiflo.pokemon.domain.PokemonEspecies;
 
 public class PokemonTest {
 
     public static void main(String[] args) {
-        
-        
-        Client client = ClientBuilder.newClient().register(new JacksonFeature());
-        PokemonDetalles pokemonDetalles = client
-                                                .target("https://pokeapi.co/api/v2/pokemon/1")
-                                                .request(MediaType.APPLICATION_JSON)
-                                                .get(PokemonDetalles.class);
-                                               
-        
-        System.out.println("Name: " + pokemonDetalles.getName());
-        System.out.println("Weight: " + pokemonDetalles.getWeight());
-        System.out.println("Height: " + pokemonDetalles.getHeight());
-        
-        List<Tipos> listaTipos = pokemonDetalles.getTypes();
-        listaTipos.forEach(tipos -> System.out.println(tipos.getType().getName()));
-        
-        List<Estadisticas> listaEstadisticas = pokemonDetalles.getStats();
-        listaEstadisticas.forEach(estadistica -> System.out.println(estadistica.getStat().getName()));
-        
-        List<Habilidades> listarHabilidades = pokemonDetalles.getAbilities();
-        listarHabilidades.forEach(habilidad -> System.out.println(habilidad.getAbility().getName()));
-                
 
+//        SÍ FUNCIONA
+//        Client client = ClientBuilder.newClient().register(new JacksonFeature());
+//        Cadena cadena = client.target("https://pokeapi.co/api/v2/evolution-chain/1")
+//                .request(MediaType.APPLICATION_JSON)
+//                .get(Cadena.class);
+//
+//        Evolucion evolucion = cadena.getChain();
+//
+//        Especie especie;
+//        List<Evolucion> listaEvolucion = evolucion.getEvolves_to();
+//
+//        while (listaEvolucion != null && !listaEvolucion.isEmpty()) {
+//            listaEvolucion = evolucion.getEvolves_to();
+//            especie = evolucion.getSpecies();
+//            System.out.println("Especie: " + especie);
+//            if (listaEvolucion != null && !listaEvolucion.isEmpty()) {
+//                evolucion = listaEvolucion.get(0);
+//            }
+//        }
+        
+        
+//Ambos funcionan para lo mismo
+        Client client = ClientBuilder.newClient().register(new JacksonFeature());
+        PokemonEspecies pokemonEspecies = client.target("https://pokeapi.co/api/v2/pokemon-species/1")
+                .request(MediaType.APPLICATION_JSON)
+                .get(PokemonEspecies.class);
+
+        System.out.println("url: " + pokemonEspecies.getEvolution_chain().getUrl());
 
     }
 
