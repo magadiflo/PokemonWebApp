@@ -19,7 +19,14 @@ public class PokemonServiceImpl implements PokemonService {
 
     public PokemonServiceImpl() {
         PokemonServiceImpl.cliente = ClientBuilder.newClient().register(new JacksonFeature());
-        PokemonServiceImpl.webTarget = PokemonServiceImpl.cliente.target(PokemonServiceImpl.URL_BASE).path("/pokemon-species");
+    }
+
+    @Override
+    public void obtenerDatosPokemones(int offset, int limit) {
+        PokemonServiceImpl.webTarget = PokemonServiceImpl.cliente.target(PokemonServiceImpl.URL_BASE)
+                .path("/pokemon-species")
+                .queryParam("offset", offset)
+                .queryParam("limit", limit);
         PokemonServiceImpl.pokemonPaginacion = PokemonServiceImpl.webTarget.request(MediaType.APPLICATION_JSON).get(PokemonPaginacion.class);
     }
 
@@ -29,18 +36,29 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public String getUrlSiguiente() {
-        return PokemonServiceImpl.pokemonPaginacion.getNext();
+    public Integer getOffsetSiguiente() {
+        return this.getOffset(PokemonServiceImpl.pokemonPaginacion.getNext());
     }
 
     @Override
-    public String getUrlAnterior() {
-        return PokemonServiceImpl.pokemonPaginacion.getPrevious();
+    public Integer getOffsetAnterior() {
+        return this.getOffset(PokemonServiceImpl.pokemonPaginacion.getPrevious());
     }
 
     @Override
     public int getTotalPokemones() {
         return PokemonServiceImpl.pokemonPaginacion.getCount();
+    }
+
+    //Tratamiendo para obtener el valor del offset recibido en el objeto
+    private Integer getOffset(String url) {
+        if (url == null || url.trim().equals("")) {
+            return null;
+        }
+        int iOffset = url.indexOf("offset") + 7;
+        int iiLimit = url.indexOf("&limit");
+        int res = iiLimit - iOffset;
+        return Integer.parseInt(url.substring(iOffset, iiLimit));
     }
 
 }

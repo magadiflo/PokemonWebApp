@@ -4,12 +4,14 @@ import java.util.List;
 import pe.com.magadiflo.pokemon.domain.Pokemon;
 
 public interface PokemonService {
+    
+    public void obtenerDatosPokemones(int offset, int limit);
 
     public List<Pokemon> getListarPokemones();
 
-    public String getUrlSiguiente();
+    public Integer getOffsetSiguiente();
 
-    public String getUrlAnterior();
+    public Integer getOffsetAnterior();
 
     public int getTotalPokemones();
 
