@@ -23,9 +23,28 @@
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Para poder acceder a los servicios REST -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>2.25.1</version>            
+        </dependency>
+        <!-- Jackson como proveedor de JSON en Jersey -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.25.1</version>            
+        </dependency>
+        <!-- Para evitar el error: java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        
     </dependencies>
     
-     <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
